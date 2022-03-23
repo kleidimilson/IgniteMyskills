@@ -6,7 +6,8 @@ import {
   StyleSheet, 
   TextInput, 
   Platform,
-  FlatList
+  FlatList,
+  Alert
  } from 'react-native'
 
  import { ButtonAdd } from '../components/ButtonAdd/ButtonAdd';
@@ -30,14 +31,44 @@ export function Home(){
       id: String(new Date().getTime()),
       name: newSkill,
     }
-    
-    setMySkills(oldState => [...oldState,data]);
+      let skill = myskills.find(skill => skill.name === data.name);
+      if(skill){
+        Alert.alert(
+          "Myskills",
+          "Este item já foi inserido!",
+          [
+            {
+              text: "Ok",
+              onPress: () => {return},
+              style: "cancel"
+            },
+          ]
+
+        )
+        return;
+      }   
+      setMySkills(oldState => [...oldState,data]);
+
   }
 
-  function removeSkill(id:string){
-    setMySkills(oldState => oldState.filter(
-      skill => skill.id !== id
-    ));
+  function handleRemoveSkill(id:string){
+
+    Alert.alert(
+      "Myskills",
+      "Tem certeza que deseja remover?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => {return},
+          style: "cancel"
+        },
+        { text: "Remover", onPress: () => setMySkills(oldState => oldState.filter(
+          skill => skill.id !== id
+        )) }
+      ]
+    )
+
+    
   }
 
   useEffect(()=>{
@@ -81,7 +112,7 @@ export function Home(){
         keyExtractor={item=>item.id}
         renderItem={({ item })=>(
           <SkillCard skill={item.name}
-          onPress={()=>removeSkill(item.id)}
+          onLongPress={()=>handleRemoveSkill(item.id)}
           />
         )}
         />
