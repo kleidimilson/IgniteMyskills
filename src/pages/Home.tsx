@@ -13,8 +13,6 @@ import {
  import { ButtonAdd } from '../components/ButtonAdd/ButtonAdd';
  import { SkillCard } from '../components/SkillCard/SkillCard';
 
-
-
 interface SkillData{
   id: string,
   name: string
@@ -43,13 +41,16 @@ export function Home(){
               style: "cancel"
             },
           ]
-
         )
         return;
-      }   
+      }
+      if(data.name === ""){
+        Alert.alert("Myskills", "Adicione uma skill!");
+        return
+      }
       setMySkills(oldState => [...oldState,data]);
 
-  }
+  }   
 
   function handleRemoveSkill(id:string){
 
@@ -97,7 +98,7 @@ export function Home(){
         />
 
         <ButtonAdd     
-          title="Adicionar"
+          title="New Skill"
           onPress={handleAddNewSkill}
         />
 
