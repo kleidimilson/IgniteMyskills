@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest"
   },
   "dependencies": {
     "@types/react-test-renderer": "^17.0.1",
